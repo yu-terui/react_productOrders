@@ -1,9 +1,12 @@
 // CommonJSで関連パッケージの読み込み
 const express = require('express');
+const cors = require('cors');
 const app = express(); //インスタンス化してappに代入
-
 // アクセス先のポート番号を定義
 const port = 3001
+
+// CORS ミドルウェアの使用
+app.use(cors());
 
 // JSオブジェクト形式に変換
 app.use(express.urlencoded({ extend: true }))
@@ -31,16 +34,14 @@ app.get("/api", (req, res) => {
   const sql = "select * from orders";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    // res.status(200).json(result);
-    res.send(result)
+    res.status(200).json(result);
   });
 });
 app.post("/api/post", (req, res) => {
   const sql = "INSERT INTO orders SET ?";
   con.query(sql, req.body, function (err, result) {
     if (err) throw err;
-    // res.status(201).json(result);
-    res.send(result)
+    res.status(201).json(result);
   });
 });
 
