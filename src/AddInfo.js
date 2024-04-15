@@ -9,8 +9,14 @@ function AddInfo() {
   const [product, setProduct] = useState("");
   const [amount, setAmount] = useState("");
   const [price, setPrice] = useState("");
+  const navigate = useNavigate();
   function person_cng(e) {
-    setPerson(e.target.value);
+    // if (e.target.value==='') {
+    //   alert("必須項目です");
+    //   e.preventDefault();
+    // } else {
+      setPerson(e.target.value);
+    // }
   }
   function phone_cng(e) {
     setPhone(e.target.value);
@@ -30,25 +36,30 @@ function AddInfo() {
   function price_cng(e) {
     setPrice(e.target.value);
   }
+  const formData = new URLSearchParams();
+  formData.append("person", person);
+  formData.append("phone", phone);
+  formData.append("address", address);
+  formData.append("date", date);
+  formData.append("product", product);
+  formData.append("amount", amount);
+  formData.append("price", price);
   function handleSubmit(e) {
     e.preventDefault();
-    fetch("/api/post", {
+    fetch("http://127.0.0.1:3001/api/post", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: JSON.stringify({
-        person,
-        phone,
-        address,
-        date,
-        product,
-        amount,
-        price,
-      }),
+      body: formData,
     })
-      .then((res) => res.json())
-      .then((data) => {
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("ネットワークレスポンスが失敗しました");
+        }
+        return res.json();
+      })
+      .then(() => {
         setPerson("");
         setPhone("");
         setAddress("");
@@ -56,11 +67,11 @@ function AddInfo() {
         setProduct("");
         setAmount("");
         setPrice("");
+        alert("追加しました");
       })
       .catch((error) => console.error("エラー:", error));
-    alert("追加しました");
   }
-  const navigate = useNavigate();
+
   return (
     <div className="container">
       <section id="add_section">
@@ -69,6 +80,7 @@ function AddInfo() {
           <div className="grid_2">
             <label htmlFor="person">注文者：</label>
             <input
+              required
               type="text"
               id="person"
               name="person"
@@ -77,6 +89,7 @@ function AddInfo() {
             />
             <label htmlFor="phone">連絡先：</label>
             <input
+              required
               type="text"
               id="phone"
               name="phone"
@@ -85,6 +98,7 @@ function AddInfo() {
             />
             <label htmlFor="address">住所：</label>
             <input
+              required
               type="text"
               id="address"
               name="address"
@@ -93,6 +107,7 @@ function AddInfo() {
             />
             <label htmlFor="date">日付：</label>
             <input
+              required
               type="date"
               id="date"
               name="date"
@@ -101,6 +116,7 @@ function AddInfo() {
             />
             <label htmlFor="product">商品：</label>
             <input
+              required
               type="text"
               id="product"
               name="product"
@@ -109,6 +125,7 @@ function AddInfo() {
             />
             <label htmlFor="amount">個数：</label>
             <input
+              required
               type="text"
               id="amount"
               name="amount"
@@ -117,6 +134,7 @@ function AddInfo() {
             />
             <label htmlFor="price">価格：</label>
             <input
+              required
               type="text"
               id="price"
               name="price"
