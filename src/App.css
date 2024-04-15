@@ -1,38 +1,193 @@
-.App {
+/* global */
+.container {
+  width: 960px;
+  margin: auto;
+  color: #333;
+}
+a{
+  text-decoration: none;
+}
+p{
+  margin: 0;
+  padding: 0;
+}
+h1, h2 {
+  padding: 0;
+  margin: 0;
+  padding-bottom: 10px;
+  font-weight: normal;
+}
+th {
+  font-weight: normal;
+}
+section+section{
+  padding-top: 30px;
+}
+/* orders_table */
+#orders_section{
+  text-align: right;
+}
+#orders_section h2{
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#orders_section #orders_table {
+  margin: auto;
+  border-collapse: collapse;
+  text-align: center;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#orders_section #orders_table th {
+  background: rgb(200, 228, 251);
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+#orders_section #orders_table th,
+#orders_section #orders_table td {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: center;
+}
+#orders_section #add_info{
+  margin: 10px;
+  border: none;
+  background:rgb(78, 162, 231);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 110%;
+}
+#orders_section #add_info{
+  color: #fff;
+}
+#add_info:hover{
+cursor: pointer;
+opacity:.7;
+}
+/* calendar */
+#calendar_header{
+  text-align: center;
+}
+#calendar_header h2{
+  display: inline;
+}
+#calendar_header button{
+  display: inline;
+  color: #fff;
+  font-size: 150%;
+  background: lightslategray;
+  padding:3px 10px;
+  margin: 10px;
+  border: none;
+  border-radius:50%;
+}
+#calendar_header button:hover{
+  cursor: pointer;
+  opacity: .8;
+}
+#calendar_table {
+  margin: auto;
+  text-align: center;
+}
+#calendar_table th,
+#calendar_table td {
+  padding: 5px 7px;
+}
+#calendar_table .order_date {
   color: white;
+  background: rgb(78, 162, 231);
+  border-radius: 10px;
 }
-
-.App-link {
-  color: #61dafb;
+#calendar_table .order_date:hover{
+  cursor: pointer;
+  opacity: .8;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+#calendar_table .grid_7{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+  gap: 5px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  width: 50%;
+  max-height: 80%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* 位置調整 */
+  padding-bottom: 50px;
+  overflow: auto;
+  background-color: rgba(28, 111, 194, 0.5);
+  border-radius: 10px;
+}
+.modalContent {
+  background-color: #fff;
+  width: 90%;
+  padding: 10px 0;
+  margin: auto;
+  line-height: 2;
+  border-radius: 10px;
+}
+.modalTable {
+  margin: auto;
+  text-align: left;
+}
+.modalTable + .modalTable {
+  padding-top: 30px;
+}
+.closeContain{
+  text-align: right;
+  padding: 10px;
+}
+.modalClose{
+  font-size: 150%;
+  font-weight: bold;
+  padding: 2px 10px;
+  color: #555;
+  background: white;
+  border-radius: 50%;
+}
+.modalClose:hover {
+  cursor: pointer;
+}
+.border{
+  border-top: 1px dotted #555;
+}
+/* add */
+#add_form{
+  text-align: center;
+}
+#add_form .grid_2{
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  width: 500px;
+  gap: 10px;
+  margin: auto;
+  text-align: left;
+}
+#add_form .grid_2 input{
+  padding: 5px;
+}
+#add_btn, #back_btn{
+  margin: 10px;
+  border: none;
+  color: #fff;
+  background:rgb(78, 162, 231);
+  padding: 5px 20px;
+  border-radius: 10px;
+  font-size: 110%;
+}
+#back_btn{
+  display: block;
+  margin: auto;
+}
+#add_btn:hover,
+#back_btn:hover
+{
+cursor: pointer;
+opacity:.7;
+}
+@media screen and (max-width: 768px) {
+  .container {
+    width: 90%;
   }
-  to {
-    transform: rotate(360deg);
+  .modal {
+    width: 90%;
   }
 }
