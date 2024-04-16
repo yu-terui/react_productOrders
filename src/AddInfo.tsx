@@ -10,31 +10,26 @@ function AddInfo() {
   const [amount, setAmount] = useState("");
   const [price, setPrice] = useState("");
   const navigate = useNavigate();
-  function person_cng(e) {
-    // if (e.target.value==='') {
-    //   alert("必須項目です");
-    //   e.preventDefault();
-    // } else {
-      setPerson(e.target.value);
-    // }
+  function person_cng(event:React.ChangeEvent<HTMLInputElement>) {
+      setPerson(event.target.value);
   }
-  function phone_cng(e) {
-    setPhone(e.target.value);
+  function phone_cng(event:React.ChangeEvent<HTMLInputElement>) {
+    setPhone(event.target.value);
   }
-  function address_cng(e) {
-    setAddress(e.target.value);
+  function address_cng(event:React.ChangeEvent<HTMLInputElement>) {
+    setAddress(event.target.value);
   }
-  function date_cng(e) {
-    setDate(e.target.value);
+  function date_cng(event:React.ChangeEvent<HTMLInputElement>) {
+    setDate(event.target.value);
   }
-  function product_cng(e) {
-    setProduct(e.target.value);
+  function product_cng(event:React.ChangeEvent<HTMLInputElement>) {
+    setProduct(event.target.value);
   }
-  function amount_cng(e) {
-    setAmount(e.target.value);
+  function amount_cng(event:React.ChangeEvent<HTMLInputElement>) {
+    setAmount(event.target.value);
   }
-  function price_cng(e) {
-    setPrice(e.target.value);
+  function price_cng(event:React.ChangeEvent<HTMLInputElement>) {
+    setPrice(event.target.value);
   }
   const formData = new URLSearchParams();
   formData.append("person", person);
@@ -44,8 +39,8 @@ function AddInfo() {
   formData.append("product", product);
   formData.append("amount", amount);
   formData.append("price", price);
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     fetch("http://127.0.0.1:3001/api/post", {
       method: "POST",
       headers: {

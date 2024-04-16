@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+type ordersObject = {
+  id: number;
+  person: string;
+  phone: string;
+  address: string;
+  date: string;
+  product: string;
+  amount: number;
+  price: number;
+};
 function List() {
   const navigate = useNavigate();
-  const [orders, setOrders] = useState("");
+  const [orders, setOrders] = useState<ordersObject[]>([]);
   useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
-      .then((data) => setOrders(data));
+      .then((data:ordersObject[]) => setOrders(data));
   }, []);
   return (
     <section id="orders_section">
@@ -27,15 +37,15 @@ function List() {
           {orders &&
             orders.map((order, index) => (
               <tr key={index}>
-                <td>{order.id}</td>
-                <td>{order.person}</td>
-                <td>{order.phone}</td>
-                <td>{order.address}</td>
-                <td>{order.date}</td>
-                <td>{order.product}</td>
-                <td>{order.amount}</td>
-                <td>{order.price}</td>
-              </tr>
+          <td>{order.id}</td>
+          <td>{order.person}</td>
+          <td>{order.phone}</td>
+          <td>{order.address}</td>
+          <td>{order.date}</td>
+          <td>{order.product}</td>
+          <td>{order.amount}</td>
+          <td>{order.price}</td>
+          </tr>
             ))}
         </tbody>
       </table>

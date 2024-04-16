@@ -1,9 +1,20 @@
 import React, { useState, useEffect, useRef } from "react";
 function Calendar() {
-  const modal_ref = useRef(null);
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [orders, setOrders] = useState([]);
+  const modal_ref = useRef<HTMLDivElement>(null);
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+  // const [orders, setOrders] = useState([]);
+  // const [orders, setOrders] = useState<ordersObject>({person:"",phone:0,address:"",date:0,product:"",amount:0,price:0});
+  const [orders, setOrders] = useState<ordersObject[]>([]);//ordersObjectの7つの方以外は配列に入れなくなる
+  type ordersObject = {
+    person: string;
+    phone: string;
+    address: string;
+    date: string;
+    product: string;
+    amount: number;
+    price: number;
+  }
 
   let weeks = ["日", "月", "火", "水", "木", "金", "土"];
   let startDate = new Date(year, month - 1, 1); //月の最初の日付
@@ -15,15 +26,15 @@ function Calendar() {
   useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
-      .then((data) => setOrders(data));
+      .then((data:ordersObject[]) => setOrders(data));
   }, [month]);
 
   // カレンダー日付部分に名前表示
   // DBの日付とカレンダーの日付、照合
   useEffect(() => {
     let calendar_table = document.getElementById("calendar_table");
-    let cells = calendar_table.querySelectorAll("td");
-    cells.forEach(function (cell) {
+    let cells = calendar_table?.querySelectorAll("td");
+    cells?.forEach(function (cell:any) {
       cell.classList.remove("order_date");
       for (let i = 0; i < orders.length; i++) {
         let order_dates = orders[i].date;
@@ -42,17 +53,17 @@ function Calendar() {
   }, [month, orders]);
 
   // 日付クリックで詳細情報の表示
-  document.addEventListener("click", function (e) {
+  document.addEventListener("click", function (e:any) {
     //modal_ref.currentがnull出ないことを確認してから処理
-    if (modal_ref.current && e.target.classList.contains("order_date")) {
+    if (modal_ref.current && e.target?.classList.contains("order_date")) {
       modal_ref.current.style.display = "block";
-      let modalContent = modal_ref.current.querySelector(".modalContent");
+      let modalContent = modal_ref.current.querySelector(".modalContent")!;
       modalContent.innerHTML = "";
       for (let i = 0; i < orders.length; i++) {
         let order_dates = orders[i].date;
         let order_date = order_dates.split("-");
         // クリックされた日付=ordersの日付→詳細情報をモーダルに表示
-        if (e.target.textContent.replace(/[^0-9]/g, "") === order_date[2]) {
+        if (e.target?.textContent.replace(/[^0-9]/g, "") === order_date[2]) {
           let orderInfoTable = document.createElement("table");
           orderInfoTable.classList.add("modalTable");
           orderInfoTable.innerHTML = `
@@ -91,7 +102,7 @@ function Calendar() {
     }
   });
   const clk_close = () => {
-    modal_ref.current.style.display = "none";
+    modal_ref.current!.style.display = "none";
   };
 
   const clk_prev = () => {
@@ -124,7 +135,7 @@ function Calendar() {
       return newMonth;
     });
   };
-  const fetchOrders = (year, month) => {
+  const fetchOrders = (year: number, month:number) => {
     fetch(`/api?year=${year}&month=${month}`)
       .then((res) => res.json())
       .then((data) => setOrders(data));
